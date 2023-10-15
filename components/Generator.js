@@ -115,8 +115,8 @@ const Generator = () => {
       <p>
         Click the above buttons to generate values. Two same values can be merge
         to generate the relatively next value (e.g. 1 and 1 will make 2. 2 and 2
-        will make 3. same for alphabets a and a will make a 'b' and b + b will
-        make a 'c'.). Merge all the same values and sell them to earn cash. If
+        will make 3. same for alphabets a and a will make a &apos;b&apos; and b + b will
+        make a &apos;c&apos;.). Merge all the same values and sell them to earn cash. If
         you have enough cash you can generate random value witch can be sold for
         heigher value. Enjoy
       </p>

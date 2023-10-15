@@ -1,8 +1,8 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-  temp: "temp",
   items: [],
+  cash: 0,
 };
 
 const TestSlice = createSlice({
@@ -12,10 +12,10 @@ const TestSlice = createSlice({
     setItems: (state, action) => {
       state.items = action.payload;
     },
-    showConsole: (state, action) => {
-      state.temp = action.payload;
+    setCash: (state, action) => {
+      state.cash = action.payload;
     },
   },
 });
-export const { setItems } = TestSlice.actions;
+export const { setItems, setCash } = TestSlice.actions;
 export default TestSlice.reducer;

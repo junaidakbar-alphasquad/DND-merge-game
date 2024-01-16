@@ -2,8 +2,8 @@ import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState, useEffect } from 'react';
 const getListStyle = (isDraggingOver, { background, ...sx } = {}) => ({
-    background:
-        isDraggingOver || background ? background || '#d4d4d4' : 'transparent',
+    // background:
+    //     isDraggingOver || background ? background || '#d4d4d4' : 'transparent',
     width: '100%',
     ...sx,
 });
@@ -15,7 +15,7 @@ const CommonDnd = ({
     array,
     id = `droppable`,
     draggable,
-    sx,
+    className,
 }) => {
     function onDragEnd(result) {
         const { source, destination } = result;
@@ -39,7 +39,7 @@ const CommonDnd = ({
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <CommonDropable component={component} id={id} sx={sx}>
+            <CommonDropable component={component} id={id} className={className}>
                 {children}
             </CommonDropable>
         </DragDropContext>
@@ -51,7 +51,7 @@ export const CommonDropable = ({
     type = 'blockList',
     id = `droppable`,
     children,
-    sx,
+    className,
     component = 'div',
 }) => {
     const Tag = component;
@@ -59,8 +59,9 @@ export const CommonDropable = ({
         <StrictModeDroppable type={type} droppableId={id}>
             {(provided, snapshot) => (
                 <Tag
+                    className={className}
                     ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver, sx)}
+                    style={getListStyle(snapshot.isDraggingOver)}
                     {...provided.droppableProps}
                 >
                     {children}

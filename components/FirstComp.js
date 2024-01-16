@@ -61,45 +61,45 @@ const FirstComp = () => {
     <>
       <CommonDnd
         array={data}
+        className="grid grid-cols-5 w-full h-screen p-4 gap-1"
         setArray={setDnd}
       >
-        <div className="grid grid-cols-5 w-full h-screen p-4 gap-1">
-          {data.map((a, i) => (
-            <Draggable key={i} draggableId={i?.toString()} index={i}>
-              {(provided, snapshot) => (
-                <div
-                  dragRef={provided.innerRef}
-                  draggableProps={provided.draggableProps}
-                  // style={getItemStyle(
-                  //   snapshot.isDragging,
-                  //   provided.draggableProps.style,
-                  // )}
-                  dragArea={provided.dragHandleProps}
-                  onClick={(e) => {
-                    if ([upperCase.at(-1), alphabets.at(-1)].includes(items[i])) {
-                      e.stopPropagation();
-                      sell(items[i], i);
-                    }
-                  }}
 
-                  className={`${items[i]
-                    ? "bg-blue-300 cursor-pointer shadow-lg border-blue-300 shadow-blue-300 group"
-                    : ""
-                    } border relative w-10 h-10 lg:w-16 lg:h-16  border-slate-300 rounded-lg flex justify-center items-center`}
-                  key={a}
+        {data.map((a, i) => (
+          <Draggable key={i} draggableId={i?.toString()} index={i}>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                // style={getItemStyle(
+                //   snapshot.isDragging,
+                //   provided.draggableProps.style,
+                // )}
+                {...provided.dragHandleProps}
+                onClick={(e) => {
+                  if ([upperCase.at(-1), alphabets.at(-1)].includes(items[i])) {
+                    e.stopPropagation();
+                    sell(items[i], i);
+                  }
+                }}
+
+                className={`${items[i]
+                  ? "bg-blue-300 cursor-pointer shadow-lg border-blue-300 shadow-blue-300 group"
+                  : ""
+                  } border relative w-10 h-10 lg:w-16 lg:h-16  border-slate-300 rounded-lg flex justify-center items-center`}
+                key={a}
+              >
+                {items[i]}
+                <div
+                  onClick={() => sell(items[i], i)}
+                  className="bg-green-600 -top-3 -right-2 cursor-pointer rounded-full w-5 h-5 justify-center items-center text-white absolute group-hover:flex hidden"
                 >
-                  {items[i]}
-                  <div
-                    onClick={() => sell(items[i], i)}
-                    className="bg-green-600 -top-3 -right-2 cursor-pointer rounded-full w-5 h-5 justify-center items-center text-white absolute group-hover:flex hidden"
-                  >
-                    $
-                  </div>
+                  $
                 </div>
-              )}
-            </Draggable>
-          ))}
-        </div>
+              </div>
+            )}
+          </Draggable>
+        ))}
       </CommonDnd>
     </>
   );

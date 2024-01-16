@@ -25,15 +25,15 @@ const CommonDnd = ({
         } else if (source?.index === destination?.index) {
             return;
         } else {
-            const updatedTemplate = JSON.parse(JSON.stringify(array));
-            try {
-                const dragItemData = updatedTemplate.splice(source.index, 1)[0];
-                updatedTemplate.splice(destination.index, 0, dragItemData);
-            } catch (error) {
-                console.error(error);
-            }
+            // const updatedTemplate = JSON.parse(JSON.stringify(array));
+            // try {
+            //     const dragItemData = updatedTemplate.splice(source.index, 1)[0];
+            //     updatedTemplate.splice(destination.index, 0, dragItemData);
+            // } catch (error) {
+            //     console.error(error);
+            // }
 
-            setArray(updatedTemplate);
+            setArray(source.index, destination?.index);
         }
     }
 

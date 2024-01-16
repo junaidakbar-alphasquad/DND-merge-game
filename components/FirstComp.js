@@ -38,24 +38,17 @@ const FirstComp = () => {
       }
     }
   };
-  const dragEnd = () => {
-    if (dragItem.current === dropItem.current || dropItem.current === null) {
-      dragItem.current = null;
-      dropItem.current = null;
+  const setDnd = (src, dest) => {
+    let temp = JSON.parse(JSON.stringify(items));
+    if (items[src] === items[dest]) {
+      temp[src] = null;
+      let { item } = handleItem(items[src]);
+      temp[dest] = item;
     } else {
-      let temp = JSON.parse(JSON.stringify(items));
-      if (items[dragItem.current] === items[dropItem.current]) {
-        temp[dragItem.current] = null;
-        let { item } = handleItem(items[dragItem.current]);
-        temp[dropItem.current] = item;
-      } else {
-        temp[dragItem.current] = items[dropItem.current] || null;
-        temp[dropItem.current] = items[dragItem.current];
-      }
-      dispatch(setItems(temp));
-      dragItem.current = null;
-      dropItem.current = null;
+      temp[src] = items[dest] || null;
+      temp[dest] = items[src];
     }
+    dispatch(setItems(temp));
   };
   const sell = (itemContent, i) => {
     let { index } = handleItem(itemContent);
@@ -94,7 +87,7 @@ const FirstComp = () => {
                       sell(items[i], i);
                     }
                   }}
-                 
+
                   className={`${items[i]
                     ? "bg-blue-300 cursor-pointer shadow-lg border-blue-300 shadow-blue-300 group"
                     : ""

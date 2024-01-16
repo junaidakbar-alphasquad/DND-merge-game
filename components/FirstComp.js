@@ -59,17 +59,11 @@ const FirstComp = () => {
   };
   return (
     <>
-      <div className="grid grid-cols-5 w-full h-screen p-4 gap-1">
-        <CommonDnd
-          array={data}
-          setArray={setDnd}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 16,
-          }}
-        >
-
+      <CommonDnd
+        array={data}
+        setArray={setDnd}
+      >
+        <div className="grid grid-cols-5 w-full h-screen p-4 gap-1">
           {data.map((a, i) => (
             <Draggable key={i} draggableId={i?.toString()} index={i}>
               {(provided, snapshot) => (
@@ -105,8 +99,8 @@ const FirstComp = () => {
               )}
             </Draggable>
           ))}
-        </CommonDnd>
-      </div>
+        </div>
+      </CommonDnd>
     </>
   );
 };

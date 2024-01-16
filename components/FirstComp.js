@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCash, setItems, showConsole } from "../redux-setup/TestSlice";
 import { alphabets, upperCase } from "./Generator";
-
+import { Draggable } from 'react-beautiful-dnd';
+import CommonDnd from "./CommonDND"
 const FirstComp = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.TestSlice.items);
@@ -66,46 +67,52 @@ const FirstComp = () => {
   return (
     <>
       <div className="grid grid-cols-5 w-full h-screen p-4 gap-1">
-        {data.map((a, i) => (
-          <div
-            draggable={
-              items[i] &&
-              ![upperCase.at(-1), alphabets.at(-1)].includes(items[i])
-            }
-            onDragStart={() => dragStart(i)}
-            onTouchStart={() => dragStart(i)}
-            onTouchEnd={() => dragEnd()}
-            onDragEnter={() => dragEnter(i)}
-            onDragEnd={() => dragEnd()}
-            onClick={(e) => {
-              if ([upperCase.at(-1), alphabets.at(-1)].includes(items[i])) {
-                e.stopPropagation();
-                sell(items[i], i);
-              }
-            }}
-            style={{
-              cursor:
-                items[i] &&
-                ![upperCase.at(-1), alphabets.at(-1)].includes(items[i])
-                  ? "grab"
-                  : "",
-            }}
-            className={`${
-              items[i]
-                ? "bg-blue-300 cursor-pointer shadow-lg border-blue-300 shadow-blue-300 group"
-                : ""
-            } border relative w-10 h-10 lg:w-16 lg:h-16  border-slate-300 rounded-lg flex justify-center items-center`}
-            key={a}
-          >
-            {items[i]}
-            <div
-              onClick={() => sell(items[i], i)}
-              className="bg-green-600 -top-3 -right-2 cursor-pointer rounded-full w-5 h-5 justify-center items-center text-white absolute group-hover:flex hidden"
-            >
-              $
-            </div>
-          </div>
-        ))}
+        <CommonDnd
+          array={data}
+          setArray={setDnd}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+          }}
+        >
+
+          {data.map((a, i) => (
+            <Draggable key={i} draggableId={i?.toString()} index={i}>
+              {(provided, snapshot) => (
+                <div
+                  dragRef={provided.innerRef}
+                  draggableProps={provided.draggableProps}
+                  // style={getItemStyle(
+                  //   snapshot.isDragging,
+                  //   provided.draggableProps.style,
+                  // )}
+                  dragArea={provided.dragHandleProps}
+                  onClick={(e) => {
+                    if ([upperCase.at(-1), alphabets.at(-1)].includes(items[i])) {
+                      e.stopPropagation();
+                      sell(items[i], i);
+                    }
+                  }}
+                 
+                  className={`${items[i]
+                    ? "bg-blue-300 cursor-pointer shadow-lg border-blue-300 shadow-blue-300 group"
+                    : ""
+                    } border relative w-10 h-10 lg:w-16 lg:h-16  border-slate-300 rounded-lg flex justify-center items-center`}
+                  key={a}
+                >
+                  {items[i]}
+                  <div
+                    onClick={() => sell(items[i], i)}
+                    className="bg-green-600 -top-3 -right-2 cursor-pointer rounded-full w-5 h-5 justify-center items-center text-white absolute group-hover:flex hidden"
+                  >
+                    $
+                  </div>
+                </div>
+              )}
+            </Draggable>
+          ))}
+        </CommonDnd>
       </div>
     </>
   );
